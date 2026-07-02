@@ -19,8 +19,8 @@
     <th align="center">🟢 After (auto-redeployed via pipeline)</th>
   </tr>
   <tr>
-    <td><img src="./docker/image/deployed-app-before.png" width="380"></td>
-    <td><img src="./docker/image/deployed-app-after.png" width="380"></td>
+    <td><img src="./image/deployed-app-before.png" width="380"></td>
+    <td><img src="./image/deployed-app-after.png" width="380"></td>
   </tr>
 </table>
 <p align="center"><i>Proof the pipeline works end-to-end: a code change pushed to GitHub was automatically built, pushed to Docker Hub, and rolled out to Kubernetes — no manual deployment steps.</i></p>
