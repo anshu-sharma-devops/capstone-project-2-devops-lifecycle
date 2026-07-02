@@ -29,9 +29,10 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'scp kubernetes/deployment.yml kubernetes/service.yml $K8S_MASTER:~'
-                sh 'ssh $K8S_MASTER "kubectl apply -f deployment.yml && kubectl apply -f service.yml"
+                sh 'ssh $K8S_MASTER "kubectl apply -f deployment.yml"'
+                sh 'ssh $K8S_MASTER "kubectl apply -f service.yml"'
                 sh 'ssh $K8S_MASTER "kubectl set image deployment/website-deployment website-container=$IMAGE_NAME:$IMAGE_TAG"'
-                sh 'ssh $K8S_MASTER "kubectl rollout restart deployment website-deployment"'
+                sh 'ssh $K8S_MASTER "kubectl rollout status deployment/website-deployment"'
                 sh 'ssh $K8S_MASTER "kubectl get pods && kubectl get svc"'
             }
         }
