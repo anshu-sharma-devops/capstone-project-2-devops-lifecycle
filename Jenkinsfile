@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         IMAGE_NAME = "anshu9103/capstone-website"
-        IMAGE_TAG = "v1"
+        IMAGE_TAG = "${BUILD_NUMBER}"
         K8S_MASTER = "ubuntu@3.111.33.219"
     }
 
@@ -29,7 +29,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh 'scp kubernetes/deployment.yml kubernetes/service.yml $K8S_MASTER:~'
-                sh 'ssh $K8S_MASTER "kubectl apply -f deployment.yml && kubectl apply -f service.yml"'
+                sh 'ssh $K8S_MASTER "kubectl apply -f deployment.yml && kubectl apply -f service.yml"
+                sh 'ssh $K8S_MASTER "kubectl set image deployment/website-deployment website-container=$IMAGE_NAME:$IMAGE_TAG"'
                 sh 'ssh $K8S_MASTER "kubectl rollout restart deployment website-deployment"'
                 sh 'ssh $K8S_MASTER "kubectl get pods && kubectl get svc"'
             }
