@@ -16,7 +16,7 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker buildx build --platform linux/amd64 -t $IMAGE_NAME:$IMAGE_TAG ./docker --load'
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG ./docker'
             }
         }
 
